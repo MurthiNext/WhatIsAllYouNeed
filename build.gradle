@@ -48,6 +48,13 @@ minecraft {
 
 repositories {
     mavenCentral()
+    maven {
+        name = 'ModMaven'
+        url = 'https://modmaven.dev'
+        content {
+            includeGroup 'mekanism'
+        }
+    }
 }
 
 dependencies {
@@ -55,6 +62,7 @@ dependencies {
 
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
     compileOnly "com.mojang:logging:1.1.1"
+    compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:api")
 }
 
 sourceSets.main.resources.srcDir('src/generated/resources')

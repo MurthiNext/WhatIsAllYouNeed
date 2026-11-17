@@ -1,1 +1,14 @@
-{}
+{
+    "itemGroup.wiayn.main": "What Is All You Need",
+    "item.wiayn.configuration_card": "Configuration Card",
+    "tooltip.wiayn.configuration_card.empty": "No configuration stored",
+    "tooltip.wiayn.configuration_card.stored": "Configuration: %s",
+    "tooltip.wiayn.configuration_card.missing_handler": "Missing configuration handler: %s",
+    "tooltip.wiayn.configuration_card.help": "Shift-right-click a block to copy, right-click to apply, shift-right-click in the air to clear",
+    "message.wiayn.configuration_card.copied": "Copied configuration of %s",
+    "message.wiayn.configuration_card.applied": "Applied configuration of %s",
+    "message.wiayn.configuration_card.incompatible": "The stored configuration does not fit this block",
+    "message.wiayn.configuration_card.unsupported": "This block does not support configuration copying",
+    "message.wiayn.configuration_card.cleared": "Configuration card cleared",
+    "message.wiayn.configuration_card.missing_handler": "Configuration handler %s is not available"
+}
