@@ -1,8 +1,10 @@
 package com.murthinext.wiayn.compat.gregtech;
 
+import com.gregtechceu.gtceu.api.machine.IMachineBlockEntity;
 import com.gregtechceu.gtceu.api.machine.MetaMachine;
+import com.gregtechceu.gtceu.api.machine.feature.IAutoOutputFluid;
+import com.gregtechceu.gtceu.api.machine.feature.IAutoOutputItem;
 import com.gregtechceu.gtceu.api.machine.feature.IMufflableMachine;
-import com.gregtechceu.gtceu.api.machine.trait.AutoOutputTrait;
 import com.gregtechceu.gtceu.common.machine.owner.MachineOwner;
 import com.murthinext.wiayn.item.configuration_card.ConfigurationHandler;
 import com.murthinext.wiayn.item.configuration_card.ConfigurationHandlerRegistry;
@@ -48,26 +50,26 @@ public final class GregTechConfigurationHandler implements ConfigurationHandler 
             return null;
         }
         CompoundTag data = new CompoundTag();
-
-        AutoOutputTrait output = machine.getTraitHolder().getTrait(AutoOutputTrait.TYPE);
-        if (output != null) {
-            Direction itemSide = output.getItemOutputDirection();
-            if (itemSide != null) {
-                data.putString(ITEM_OUTPUT_SIDE, itemSide.getName());
-                data.putBoolean(ITEM_AUTO_OUTPUT, output.isAutoOutputItems());
-                data.putBoolean(ITEM_ALLOW_INPUT, output.allowsItemInputFromOutputSide());
+        if (machine instanceof IAutoOutputItem itemOutput) {
+            Direction side = itemOutput.getOutputFacingItems();
+            if (side != null) {
+                data.putString(ITEM_OUTPUT_SIDE, side.getName());
             }
-            Direction fluidSide = output.getFluidOutputDirection();
-            if (fluidSide != null) {
-                data.putString(FLUID_OUTPUT_SIDE, fluidSide.getName());
-                data.putBoolean(FLUID_AUTO_OUTPUT, output.isAutoOutputFluids());
-                data.putBoolean(FLUID_ALLOW_INPUT, output.allowsFluidInputFromOutputSide());
+            data.putBoolean(ITEM_AUTO_OUTPUT, itemOutput.isAutoOutputItems());
+            data.putBoolean(ITEM_ALLOW_INPUT, itemOutput.isAllowInputFromOutputSideItems());
+        }
+        if (machine instanceof IAutoOutputFluid fluidOutput) {
+            Direction side = fluidOutput.getOutputFacingFluids();
+            if (side != null) {
+                data.putString(FLUID_OUTPUT_SIDE, side.getName());
             }
+            data.putBoolean(FLUID_AUTO_OUTPUT, fluidOutput.isAutoOutputFluids());
+            data.putBoolean(FLUID_ALLOW_INPUT, fluidOutput.isAllowInputFromOutputSideFluids());
         }
         if (machine instanceof IMufflableMachine mufflable) {
             data.putBoolean(MUFFLED, mufflable.isMuffled());
         }
-        return new ConfigurationSnapshot(ID, target.displayName(), data);
+        return data.isEmpty() ? null : new ConfigurationSnapshot(ID, target.displayName(), data);
     }
 
     @Override
@@ -82,25 +84,32 @@ public final class GregTechConfigurationHandler implements ConfigurationHandler 
         if (machine == null) {
             return;
         }
-        AutoOutputTrait output = machine.getTraitHolder().getTrait(AutoOutputTrait.TYPE);
-        if (output != null) {
+        if (machine instanceof IAutoOutputItem itemOutput) {
             if (data.contains(ITEM_OUTPUT_SIDE)) {
-                output.setItemOutputDirection(readDirection(data, ITEM_OUTPUT_SIDE));
+                Direction side = readDirection(data, ITEM_OUTPUT_SIDE);
+                if (side != null) {
+                    itemOutput.setOutputFacingItems(side);
+                }
             }
             if (data.contains(ITEM_AUTO_OUTPUT)) {
-                output.setAllowAutoOutputItems(data.getBoolean(ITEM_AUTO_OUTPUT));
+                itemOutput.setAutoOutputItems(data.getBoolean(ITEM_AUTO_OUTPUT));
             }
             if (data.contains(ITEM_ALLOW_INPUT)) {
-                output.setAllowItemInputFromOutputSide(data.getBoolean(ITEM_ALLOW_INPUT));
+                itemOutput.setAllowInputFromOutputSideItems(data.getBoolean(ITEM_ALLOW_INPUT));
             }
+        }
+        if (machine instanceof IAutoOutputFluid fluidOutput) {
             if (data.contains(FLUID_OUTPUT_SIDE)) {
-                output.setFluidOutputDirection(readDirection(data, FLUID_OUTPUT_SIDE));
+                Direction side = readDirection(data, FLUID_OUTPUT_SIDE);
+                if (side != null) {
+                    fluidOutput.setOutputFacingFluids(side);
+                }
             }
             if (data.contains(FLUID_AUTO_OUTPUT)) {
-                output.setAllowAutoOutputFluids(data.getBoolean(FLUID_AUTO_OUTPUT));
+                fluidOutput.setAutoOutputFluids(data.getBoolean(FLUID_AUTO_OUTPUT));
             }
             if (data.contains(FLUID_ALLOW_INPUT)) {
-                output.setAllowFluidInputFromOutputSide(data.getBoolean(FLUID_ALLOW_INPUT));
+                fluidOutput.setAllowInputFromOutputSideFluids(data.getBoolean(FLUID_ALLOW_INPUT));
             }
         }
         if (machine instanceof IMufflableMachine mufflable && data.contains(MUFFLED)) {
@@ -110,7 +119,7 @@ public final class GregTechConfigurationHandler implements ConfigurationHandler 
 
     @Nullable
     private static MetaMachine machine(ConfigurationTarget target) {
-        return target.blockEntity() instanceof MetaMachine machine ? machine : null;
+        return target.blockEntity() instanceof IMachineBlockEntity blockEntity ? blockEntity.getMetaMachine() : null;
     }
 
     @Nullable

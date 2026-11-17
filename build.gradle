@@ -70,6 +70,13 @@ repositories {
         }
     }
     maven {
+        name = 'FirstDarkDev Maven'
+        url = 'https://maven.firstdarkdev.xyz/snapshots'
+        content {
+            includeGroup 'com.lowdragmc.ldlib'
+        }
+    }
+    maven {
         name = 'Curse Maven'
         url = 'https://cursemaven.com'
         content {
@@ -87,6 +94,7 @@ dependencies {
     compileOnly fg.deobf("com.teamcofh:cofh_core:${cofh_core_version}")
     compileOnly fg.deobf("curse.maven:industrial-foregoing-266515:${industrial_foregoing_file}")
     compileOnly fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gtm_version}")
+    compileOnly fg.deobf("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}")
 }
 
 sourceSets.main.resources.srcDir('src/generated/resources')
