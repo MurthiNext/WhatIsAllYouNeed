@@ -55,6 +55,27 @@ repositories {
             includeGroup 'mekanism'
         }
     }
+    maven {
+        name = 'CoFH Maven'
+        url = 'https://maven.covers1624.net'
+        content {
+            includeGroup 'com.teamcofh'
+        }
+    }
+    maven {
+        name = 'GTCEu Maven'
+        url = 'https://maven.gtceu.com'
+        content {
+            includeGroup 'com.gregtechceu.gtceu'
+        }
+    }
+    maven {
+        name = 'Curse Maven'
+        url = 'https://cursemaven.com'
+        content {
+            includeGroup 'curse.maven'
+        }
+    }
 }
 
 dependencies {
@@ -63,6 +84,9 @@ dependencies {
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
     compileOnly "com.mojang:logging:1.1.1"
     compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:api")
+    compileOnly fg.deobf("com.teamcofh:cofh_core:${cofh_core_version}")
+    compileOnly fg.deobf("curse.maven:industrial-foregoing-266515:${industrial_foregoing_file}")
+    compileOnly fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gtm_version}")
 }
 
 sourceSets.main.resources.srcDir('src/generated/resources')
