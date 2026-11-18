@@ -1,4 +1,4 @@
-package com.murthinext.wiayn.item.configuration_card;
+package com.murthinext.wiayn.item.multi_config_card;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

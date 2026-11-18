@@ -1,4 +1,4 @@
-package com.murthinext.wiayn.item.configuration_card;
+package com.murthinext.wiayn.item.multi_config_card;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;

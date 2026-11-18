@@ -18,8 +18,8 @@ public final class ModCreativeTabs {
             "main",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.wiayn.main"))
-                    .icon(() -> new ItemStack(ModItems.CONFIGURATION_CARD.get()))
-                    .displayItems((parameters, output) -> output.accept(ModItems.CONFIGURATION_CARD.get()))
+                    .icon(() -> new ItemStack(ModItems.MULTI_CONFIG_CARD.get()))
+                    .displayItems((parameters, output) -> output.accept(ModItems.MULTI_CONFIG_CARD.get()))
                     .build());
 
     private ModCreativeTabs() {}

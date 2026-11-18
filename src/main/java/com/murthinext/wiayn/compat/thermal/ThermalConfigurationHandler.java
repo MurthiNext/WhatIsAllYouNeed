@@ -2,10 +2,10 @@ package com.murthinext.wiayn.compat.thermal;
 
 import cofh.lib.api.IConveyableData;
 import cofh.lib.api.control.ISecurable;
-import com.murthinext.wiayn.item.configuration_card.ConfigurationHandler;
-import com.murthinext.wiayn.item.configuration_card.ConfigurationHandlerRegistry;
-import com.murthinext.wiayn.item.configuration_card.ConfigurationSnapshot;
-import com.murthinext.wiayn.item.configuration_card.ConfigurationTarget;
+import com.murthinext.wiayn.item.multi_config_card.ConfigurationHandler;
+import com.murthinext.wiayn.item.multi_config_card.ConfigurationHandlerRegistry;
+import com.murthinext.wiayn.item.multi_config_card.ConfigurationSnapshot;
+import com.murthinext.wiayn.item.multi_config_card.ConfigurationTarget;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;

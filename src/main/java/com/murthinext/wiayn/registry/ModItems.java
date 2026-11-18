@@ -1,6 +1,6 @@
 package com.murthinext.wiayn.registry;
 
-import com.murthinext.wiayn.item.configuration_card.ConfigurationCardItem;
+import com.murthinext.wiayn.item.multi_config_card.MultiConfigCardItem;
 import com.murthinext.wiayn.wiayn;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -13,9 +13,9 @@ public final class ModItems {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, wiayn.MODID);
 
-    public static final RegistryObject<Item> CONFIGURATION_CARD = ITEMS.register(
-            "configuration_card",
-            () -> new ConfigurationCardItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+    public static final RegistryObject<Item> MULTI_CONFIG_CARD = ITEMS.register(
+            "multi_config_card",
+            () -> new MultiConfigCardItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     private ModItems() {}
 

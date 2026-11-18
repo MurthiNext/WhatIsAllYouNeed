@@ -1,14 +1,14 @@
 {
     "itemGroup.wiayn.main": "尽你所需",
-    "item.wiayn.configuration_card": "配置卡",
-    "tooltip.wiayn.configuration_card.empty": "未存储配置",
-    "tooltip.wiayn.configuration_card.stored": "配置：%s",
-    "tooltip.wiayn.configuration_card.missing_handler": "缺少配置处理器：%s",
-    "tooltip.wiayn.configuration_card.help": "潜行右击方块复制，右击方块应用，潜行右击空气清除",
-    "message.wiayn.configuration_card.copied": "已复制 %s 的配置",
-    "message.wiayn.configuration_card.applied": "已应用 %s 的配置",
-    "message.wiayn.configuration_card.incompatible": "存储的配置不适用于该方块",
-    "message.wiayn.configuration_card.unsupported": "该方块不支持复制配置",
-    "message.wiayn.configuration_card.cleared": "已清除配置卡",
-    "message.wiayn.configuration_card.missing_handler": "配置处理器 %s 不可用"
+    "item.wiayn.multi_config_card": "通式配置卡",
+    "tooltip.wiayn.multi_config_card.empty": "未存储配置",
+    "tooltip.wiayn.multi_config_card.stored": "配置：%s",
+    "tooltip.wiayn.multi_config_card.missing_handler": "缺少配置处理器：%s",
+    "tooltip.wiayn.multi_config_card.help": "潜行右击方块复制，右击方块应用，潜行右击空气清除",
+    "message.wiayn.multi_config_card.copied": "已复制 %s 的配置",
+    "message.wiayn.multi_config_card.applied": "已应用 %s 的配置",
+    "message.wiayn.multi_config_card.incompatible": "存储的配置不适用于该方块",
+    "message.wiayn.multi_config_card.unsupported": "该方块不支持复制配置",
+    "message.wiayn.multi_config_card.cleared": "已清除通式配置卡",
+    "message.wiayn.multi_config_card.missing_handler": "配置处理器 %s 不可用"
 }

@@ -1,14 +1,14 @@
 {
     "itemGroup.wiayn.main": "What Is All You Need",
-    "item.wiayn.configuration_card": "Configuration Card",
-    "tooltip.wiayn.configuration_card.empty": "No configuration stored",
-    "tooltip.wiayn.configuration_card.stored": "Configuration: %s",
-    "tooltip.wiayn.configuration_card.missing_handler": "Missing configuration handler: %s",
-    "tooltip.wiayn.configuration_card.help": "Shift-right-click a block to copy, right-click to apply, shift-right-click in the air to clear",
-    "message.wiayn.configuration_card.copied": "Copied configuration of %s",
-    "message.wiayn.configuration_card.applied": "Applied configuration of %s",
-    "message.wiayn.configuration_card.incompatible": "The stored configuration does not fit this block",
-    "message.wiayn.configuration_card.unsupported": "This block does not support configuration copying",
-    "message.wiayn.configuration_card.cleared": "Configuration card cleared",
-    "message.wiayn.configuration_card.missing_handler": "Configuration handler %s is not available"
+    "item.wiayn.multi_config_card": "Multi Config Card",
+    "tooltip.wiayn.multi_config_card.empty": "No configuration stored",
+    "tooltip.wiayn.multi_config_card.stored": "Configuration: %s",
+    "tooltip.wiayn.multi_config_card.missing_handler": "Missing configuration handler: %s",
+    "tooltip.wiayn.multi_config_card.help": "Shift-right-click a block to copy, right-click to apply, shift-right-click in the air to clear",
+    "message.wiayn.multi_config_card.copied": "Copied configuration of %s",
+    "message.wiayn.multi_config_card.applied": "Applied configuration of %s",
+    "message.wiayn.multi_config_card.incompatible": "The stored configuration does not fit this block",
+    "message.wiayn.multi_config_card.unsupported": "This block does not support configuration copying",
+    "message.wiayn.multi_config_card.cleared": "Multi config card cleared",
+    "message.wiayn.multi_config_card.missing_handler": "Configuration handler %s is not available"
 }

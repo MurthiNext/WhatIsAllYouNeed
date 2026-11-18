@@ -1,4 +1,4 @@
-package com.murthinext.wiayn.item.configuration_card;
+package com.murthinext.wiayn.item.multi_config_card;
 
 import com.google.gson.JsonParseException;
 import net.minecraft.nbt.CompoundTag;
