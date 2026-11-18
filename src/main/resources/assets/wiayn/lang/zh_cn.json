@@ -16,7 +16,6 @@
     "screen.wiayn.multi_config_card.mode.require_all.tip": "保留已有升级，只有缺少的升级材料齐全且均可安装时才安装",
     "screen.wiayn.multi_config_card.mode.exact": "完全复制",
     "screen.wiayn.multi_config_card.mode.exact.tip": "使粘贴的机器与配置中的记录完全相同，多余升级会被返还",
-    "screen.wiayn.multi_config_card.option_state": "%s：%s",
     "message.wiayn.multi_config_card.copied": "已复制 %s 的配置",
     "message.wiayn.multi_config_card.applied": "已应用 %s 的配置",
     "message.wiayn.multi_config_card.incompatible": "存储的配置不适用于该方块",

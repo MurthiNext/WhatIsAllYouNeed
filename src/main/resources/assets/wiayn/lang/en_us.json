@@ -16,7 +16,6 @@
     "screen.wiayn.multi_config_card.mode.require_all.tip": "Keep existing upgrades; install only if all missing upgrades are available and compatible",
     "screen.wiayn.multi_config_card.mode.exact": "Copy exactly",
     "screen.wiayn.multi_config_card.mode.exact.tip": "Ensure that the pasted machine is exactly the same as the record in the configuration, and any unnecessary upgrades will be refunded",
-    "screen.wiayn.multi_config_card.option_state": "%s: %s",
     "message.wiayn.multi_config_card.copied": "Copied configuration of %s",
     "message.wiayn.multi_config_card.applied": "Applied configuration of %s",
     "message.wiayn.multi_config_card.incompatible": "The stored configuration does not fit this block",
