@@ -1,5 +1,6 @@
 package com.murthinext.wiayn.item.multi_config_card;
 
+import com.murthinext.nextui.layout.PlayerInventoryLayout;
 import com.murthinext.wiayn.registry.ModMenus;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,16 +14,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public final class MultiConfigCardMenu extends AbstractContainerMenu {
-
-    public static final int INVENTORY_Y = 122;
-
-    private static final int INVENTORY_COLUMNS = 9;
-    private static final int INVENTORY_ROWS = 3;
-    private static final int MAIN_INVENTORY_SLOTS = INVENTORY_COLUMNS * INVENTORY_ROWS;
-    private static final int PLAYER_SLOTS = MAIN_INVENTORY_SLOTS + INVENTORY_COLUMNS;
-    private static final int INVENTORY_X = 8;
-    private static final int HOTBAR_Y = 180;
-    private static final int SLOT_SIZE = 18;
 
     private final InteractionHand hand;
     private final ItemStack card;
@@ -39,23 +30,17 @@ public final class MultiConfigCardMenu extends AbstractContainerMenu {
         data.set(1, options.upgrades() ? 1 : 0);
         data.set(2, options.upgradeMode().ordinal());
         addDataSlots(data);
-        for (int index = 0; index < PLAYER_SLOTS; index++) {
-            boolean hotbar = index >= MAIN_INVENTORY_SLOTS;
-            int inventorySlot = hotbar ? index - MAIN_INVENTORY_SLOTS : index + INVENTORY_COLUMNS;
-            int x = INVENTORY_X + index % INVENTORY_COLUMNS * SLOT_SIZE;
-            int y = hotbar ? HOTBAR_Y : INVENTORY_Y + index / INVENTORY_COLUMNS * SLOT_SIZE;
-            addSlot(new Slot(inventory, inventorySlot, x, y) {
-                @Override
-                public boolean mayPickup(Player player) {
-                    return getSlotIndex() != cardSlot && super.mayPickup(player);
-                }
+        PlayerInventoryLayout.STANDARD.forEachSlot((index, x, y) -> addSlot(new Slot(inventory, index, x, y) {
+            @Override
+            public boolean mayPickup(Player player) {
+                return getSlotIndex() != cardSlot && super.mayPickup(player);
+            }
 
-                @Override
-                public boolean mayPlace(ItemStack stack) {
-                    return getSlotIndex() != cardSlot && super.mayPlace(stack);
-                }
-            });
-        }
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return getSlotIndex() != cardSlot && super.mayPlace(stack);
+            }
+        }));
     }
 
     public ConfigurationOptions options() {
@@ -118,9 +103,9 @@ public final class MultiConfigCardMenu extends AbstractContainerMenu {
         }
         ItemStack stack = slot.getItem();
         ItemStack original = stack.copy();
-        boolean moved = index < MAIN_INVENTORY_SLOTS
-                ? moveItemStackTo(stack, MAIN_INVENTORY_SLOTS, PLAYER_SLOTS, false)
-                : moveItemStackTo(stack, 0, MAIN_INVENTORY_SLOTS, false);
+        boolean moved = index < PlayerInventoryLayout.MAIN_SLOTS
+                ? moveItemStackTo(stack, PlayerInventoryLayout.MAIN_SLOTS, PlayerInventoryLayout.SLOT_COUNT, false)
+                : moveItemStackTo(stack, 0, PlayerInventoryLayout.MAIN_SLOTS, false);
         if (!moved) {
             return ItemStack.EMPTY;
         }

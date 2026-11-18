@@ -1,6 +1,11 @@
 ## What Is All You Need
 
-面向科技整合包的实用模组。
+A useful mod for Tech Modpack.
+
+## Build
+
+Before first build, run `.\gradlew.bat publishToMavenLocal` in the repo `NextUI`.
+Then run `.\gradlew.bat assemble` in this repo.
 
 ## LICENSES
 - [MIT License](LICENSE)

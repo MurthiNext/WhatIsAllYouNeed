@@ -15,6 +15,12 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(17)
 }
 
+def nextUi = "com.murthinext:nextui-forge-${minecraft_version}:${nextui_version}".toString()
+def nextUiRange = "[${nextui_version},${nextui_version_limit})".toString()
+def nextUiMavenUrl = providers.gradleProperty('nextui_maven_url').orNull
+
+jarJar.enable()
+
 minecraft {
     mappings channel: mapping_channel, version: mapping_version
     copyIdeResources = true
@@ -47,6 +53,19 @@ minecraft {
 }
 
 repositories {
+    if (nextUiMavenUrl) {
+        maven {
+            url = uri(nextUiMavenUrl)
+            content {
+                includeModule 'com.murthinext', "nextui-forge-${minecraft_version}"
+            }
+        }
+    }
+    mavenLocal {
+        content {
+            includeModule 'com.murthinext', "nextui-forge-${minecraft_version}"
+        }
+    }
     mavenCentral()
     maven {
         name = 'ModMaven'
@@ -95,6 +114,11 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    implementation fg.deobf(nextUi)
+    jarJar(nextUi) {
+        jarJar.ranged(it, nextUiRange)
+    }
+
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
     compileOnly "com.mojang:logging:1.1.1"
     compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")
@@ -113,6 +137,7 @@ tasks.named('processResources', ProcessResources).configure {
                              minecraft_version_range: minecraft_version_range,
                              forge_version          : forge_version,
                              forge_version_range    : forge_version_range,
+                             nextui_version_range   : nextUiRange,
                              loader_version_range   : loader_version_range,
                              mod_id                 : mod_id,
                              mod_name               : mod_name,
@@ -135,7 +160,13 @@ tasks.withType(JavaCompile).configureEach {
     options.forkOptions.jvmArgs += ['-Duser.language=en', '-Duser.country=US']
 }
 
+tasks.named('jarJar').configure {
+    archiveClassifier = ''
+    finalizedBy 'reobfJarJar'
+}
+
 tasks.named('jar', Jar).configure {
+    archiveClassifier = 'slim'
     manifest {
         attributes(["Specification-Title"     : mod_id,
                     "Specification-Vendor"    : mod_authors,
