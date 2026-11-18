@@ -133,12 +133,13 @@ public final class MultiConfigCardScreen extends AbstractContainerScreen<MultiCo
 
         private final BooleanSupplier selected;
         private final Runnable action;
+        private final Tooltip optionTooltip;
 
         private OptionBox(int x, int y, String key, BooleanSupplier selected, Runnable action) {
             super(x, y, imageWidth - (x - leftPos) - 8, 14, Component.translatable(key));
             this.selected = selected;
             this.action = action;
-            setTooltip(Tooltip.create(Component.translatable(key + ".tip")));
+            optionTooltip = Tooltip.create(Component.translatable(key + ".tip"));
         }
 
         @Override
@@ -156,7 +157,17 @@ public final class MultiConfigCardScreen extends AbstractContainerScreen<MultiCo
             if (selected.getAsBoolean()) {
                 graphics.fill(x + 3, y + 3, x + 7, y + 7, color);
             }
-            graphics.drawString(font, getMessage(), x + 16, getY() + 3, active ? TEXT : TEXT_DISABLED, false);
+            int textX = x + 16;
+            int textY = getY() + 3;
+            graphics.drawString(font, getMessage(), textX, textY, active ? TEXT : TEXT_DISABLED, false);
+            boolean textHovered = mouseX >= textX
+                    && mouseX < textX + font.width(getMessage())
+                    && mouseY >= textY
+                    && mouseY < textY + font.lineHeight;
+            boolean keyboardFocused = isFocused()
+                    && minecraft != null
+                    && minecraft.getLastInputType().isKeyboard();
+            setTooltip(textHovered || keyboardFocused ? optionTooltip : null);
         }
 
         @Override
