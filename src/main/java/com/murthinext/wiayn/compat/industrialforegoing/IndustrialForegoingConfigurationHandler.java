@@ -5,6 +5,7 @@ import com.murthinext.wiayn.item.multi_config_card.ConfigurationHandler;
 import com.murthinext.wiayn.item.multi_config_card.ConfigurationHandlerRegistry;
 import com.murthinext.wiayn.item.multi_config_card.ConfigurationSnapshot;
 import com.murthinext.wiayn.item.multi_config_card.ConfigurationTarget;
+import com.murthinext.wiayn.item.multi_config_card.upgrade.UpgradeInventory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -12,11 +13,13 @@ import org.jetbrains.annotations.Nullable;
 
 public final class IndustrialForegoingConfigurationHandler implements ConfigurationHandler {
 
-    public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath("industrialforegoing", "machine_settings");
+    public static final ResourceLocation ID =
+            ResourceLocation.fromNamespaceAndPath("industrialforegoing", "machine_settings");
 
     private static final String AUGMENTS = "MACHINE_ADDONS";
 
-    private static final IndustrialForegoingConfigurationHandler INSTANCE = new IndustrialForegoingConfigurationHandler();
+    private static final IndustrialForegoingConfigurationHandler INSTANCE =
+            new IndustrialForegoingConfigurationHandler();
 
     private IndustrialForegoingConfigurationHandler() {}
 
@@ -31,20 +34,22 @@ public final class IndustrialForegoingConfigurationHandler implements Configurat
 
     @Nullable
     @Override
-    public ConfigurationSnapshot copy(ConfigurationTarget target, Player player) {
+    public ConfigurationSnapshot copy(ConfigurationTarget target, Player player, boolean regular) {
         IMachineSettings settings = machineSettings(target);
         if (settings == null) {
             return null;
         }
         CompoundTag data = new CompoundTag();
-        settings.saveSettings(player, data);
-        data.remove(AUGMENTS);
+        if (regular) {
+            settings.saveSettings(player, data);
+            data.remove(AUGMENTS);
+        }
         return new ConfigurationSnapshot(ID, target.displayName(), data);
     }
 
     @Override
     public boolean canPaste(ConfigurationTarget target, Player player, CompoundTag data) {
-        return !data.isEmpty() && machineSettings(target) != null;
+        return machineSettings(target) != null;
     }
 
     @Override
@@ -53,6 +58,12 @@ public final class IndustrialForegoingConfigurationHandler implements Configurat
         if (settings != null) {
             settings.loadSettings(player, data);
         }
+    }
+
+    @Nullable
+    @Override
+    public UpgradeInventory upgrades(ConfigurationTarget target) {
+        return IndustrialForegoingUpgrades.of(target.blockEntity());
     }
 
     @Nullable

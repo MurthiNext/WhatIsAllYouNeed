@@ -35,10 +35,10 @@ public final class ConfigurationHandlerRegistry {
     }
 
     @Nullable
-    public static ConfigurationSnapshot copy(ConfigurationTarget target, Player player) {
+    public static ConfigurationSnapshot copy(ConfigurationTarget target, Player player, boolean regular) {
         for (ConfigurationHandler handler : ORDER) {
             if (handler.canCopy(target, player)) {
-                return handler.copy(target, player);
+                return handler.copy(target, player, regular);
             }
         }
         return null;

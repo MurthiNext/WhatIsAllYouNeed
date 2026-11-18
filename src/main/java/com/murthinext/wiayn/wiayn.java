@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import com.murthinext.wiayn.compat.ConfigurationCompat;
 import com.murthinext.wiayn.registry.ModCreativeTabs;
 import com.murthinext.wiayn.registry.ModItems;
+import com.murthinext.wiayn.registry.ModMenus;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -22,6 +23,7 @@ public final class wiayn {
     public wiayn(FMLJavaModLoadingContext context) {
         IEventBus modBus = context.getModEventBus();
         ModItems.register(modBus);
+        ModMenus.register(modBus);
         ModCreativeTabs.register(modBus);
         modBus.addListener(this::commonSetup);
         LOGGER.info("What Is All You Need initialized");

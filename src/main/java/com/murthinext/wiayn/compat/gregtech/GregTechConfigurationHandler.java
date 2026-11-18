@@ -44,12 +44,15 @@ public final class GregTechConfigurationHandler implements ConfigurationHandler 
 
     @Nullable
     @Override
-    public ConfigurationSnapshot copy(ConfigurationTarget target, Player player) {
+    public ConfigurationSnapshot copy(ConfigurationTarget target, Player player, boolean regular) {
         MetaMachine machine = machine(target);
         if (machine == null) {
             return null;
         }
         CompoundTag data = new CompoundTag();
+        if (!regular) {
+            return new ConfigurationSnapshot(ID, target.displayName(), data);
+        }
         if (machine instanceof IAutoOutputItem itemOutput) {
             Direction side = itemOutput.getOutputFacingItems();
             if (side != null) {

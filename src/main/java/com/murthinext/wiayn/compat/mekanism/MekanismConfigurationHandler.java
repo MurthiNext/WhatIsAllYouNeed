@@ -1,11 +1,13 @@
 package com.murthinext.wiayn.compat.mekanism;
 
+import com.murthinext.wiayn.item.multi_config_card.ConfigurationHandler;
 import com.murthinext.wiayn.item.multi_config_card.ConfigurationHandlerRegistry;
 import com.murthinext.wiayn.item.multi_config_card.ConfigurationSnapshot;
 import com.murthinext.wiayn.item.multi_config_card.ConfigurationTarget;
-import com.murthinext.wiayn.item.multi_config_card.ConfigurationHandler;
+import com.murthinext.wiayn.item.multi_config_card.upgrade.UpgradeInventory;
 import mekanism.api.IConfigCardAccess;
 import mekanism.api.security.ISecurityUtils;
+import mekanism.common.tile.base.TileEntityMekanism;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -41,7 +43,7 @@ public final class MekanismConfigurationHandler implements ConfigurationHandler 
 
     @Nullable
     @Override
-    public ConfigurationSnapshot copy(ConfigurationTarget target, Player player) {
+    public ConfigurationSnapshot copy(ConfigurationTarget target, Player player, boolean regular) {
         IConfigCardAccess access = access(target);
         if (access == null) {
             return null;
@@ -51,7 +53,7 @@ public final class MekanismConfigurationHandler implements ConfigurationHandler 
         if (typeId == null) {
             return null;
         }
-        CompoundTag data = access.getConfigurationData(player);
+        CompoundTag data = regular ? access.getConfigurationData(player) : new CompoundTag();
         data.putString(DATA_TYPE, typeId.toString());
         return new ConfigurationSnapshot(ID, Component.translatable(access.getConfigCardName()), data);
     }
@@ -73,6 +75,14 @@ public final class MekanismConfigurationHandler implements ConfigurationHandler 
             access.setConfigurationData(player, data);
             access.configurationDataSet();
         }
+    }
+
+    @Nullable
+    @Override
+    public UpgradeInventory upgrades(ConfigurationTarget target) {
+        return target.blockEntity() instanceof TileEntityMekanism tile && tile.supportsUpgrades()
+                ? new MekanismUpgradeInventory(tile)
+                : null;
     }
 
     @Nullable

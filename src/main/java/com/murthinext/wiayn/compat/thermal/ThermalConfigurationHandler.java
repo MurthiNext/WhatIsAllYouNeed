@@ -6,9 +6,11 @@ import com.murthinext.wiayn.item.multi_config_card.ConfigurationHandler;
 import com.murthinext.wiayn.item.multi_config_card.ConfigurationHandlerRegistry;
 import com.murthinext.wiayn.item.multi_config_card.ConfigurationSnapshot;
 import com.murthinext.wiayn.item.multi_config_card.ConfigurationTarget;
+import com.murthinext.wiayn.item.multi_config_card.upgrade.UpgradeInventory;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.Nullable;
 
 public final class ThermalConfigurationHandler implements ConfigurationHandler {
@@ -26,23 +28,25 @@ public final class ThermalConfigurationHandler implements ConfigurationHandler {
     @Override
     public boolean canCopy(ConfigurationTarget target, Player player) {
         IConveyableData conveyable = conveyable(target);
-        return conveyable != null && canAccess(target, player) && !write(conveyable, player).isEmpty();
+        return conveyable != null
+                && canAccess(target, player)
+                && !write(conveyable, player).isEmpty();
     }
 
     @Nullable
     @Override
-    public ConfigurationSnapshot copy(ConfigurationTarget target, Player player) {
+    public ConfigurationSnapshot copy(ConfigurationTarget target, Player player, boolean regular) {
         IConveyableData conveyable = conveyable(target);
         if (conveyable == null) {
             return null;
         }
-        CompoundTag data = write(conveyable, player);
-        return data.isEmpty() ? null : new ConfigurationSnapshot(ID, target.displayName(), data);
+        CompoundTag data = regular ? write(conveyable, player) : new CompoundTag();
+        return new ConfigurationSnapshot(ID, target.displayName(), data);
     }
 
     @Override
     public boolean canPaste(ConfigurationTarget target, Player player, CompoundTag data) {
-        return !data.isEmpty() && conveyable(target) != null && canAccess(target, player);
+        return conveyable(target) != null && canAccess(target, player);
     }
 
     @Override
@@ -55,6 +59,12 @@ public final class ThermalConfigurationHandler implements ConfigurationHandler {
         if (target.blockEntity() != null) {
             target.blockEntity().setChanged();
         }
+    }
+
+    @Nullable
+    @Override
+    public UpgradeInventory upgrades(ConfigurationTarget target) {
+        return ModList.get().isLoaded("thermal") ? ThermalUpgrades.of(target.blockEntity()) : null;
     }
 
     private static CompoundTag write(IConveyableData conveyable, Player player) {

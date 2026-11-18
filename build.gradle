@@ -83,6 +83,13 @@ repositories {
             includeGroup 'curse.maven'
         }
     }
+    maven {
+        name = 'Modrinth'
+        url = 'https://api.modrinth.com/maven'
+        content {
+            includeGroup 'maven.modrinth'
+        }
+    }
 }
 
 dependencies {
@@ -90,9 +97,11 @@ dependencies {
 
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
     compileOnly "com.mojang:logging:1.1.1"
-    compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}:api")
+    compileOnly fg.deobf("mekanism:Mekanism:${mekanism_version}")
     compileOnly fg.deobf("com.teamcofh:cofh_core:${cofh_core_version}")
+    compileOnly fg.deobf("com.teamcofh:thermal_core:${thermal_core_version}")
     compileOnly fg.deobf("curse.maven:industrial-foregoing-266515:${industrial_foregoing_file}")
+    compileOnly fg.deobf("maven.modrinth:titanium:${titanium_version}")
     compileOnly fg.deobf("com.gregtechceu.gtceu:gtceu-${minecraft_version}:${gtm_version}")
     compileOnly fg.deobf("com.lowdragmc.ldlib:ldlib-forge-${minecraft_version}:${ldlib_version}")
 }
